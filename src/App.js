@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components";
+import { AuthContext } from "../src/components/AuthContext";
+import { useState } from "react";
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [cadastro, setCadastro] = useState({
+    email: "",
+    name: "",
+    password: "",
+    confirmPpassword: "",
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider
+      value={{
+        form,
+        setForm,
+        user,
+        setUser,
+        cadastro,
+        setCadastro,
+        token,
+        setToken,
+      }}
+    >
+      <Container>
+        projeto 15
+        {/* <RoutersComponents /> */}
+      </Container>
+    </AuthContext.Provider>
   );
 }
 
-export default App;
+const Container = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: f9f9f9f;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+`;
+
