@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { AuthContext } from "../src/components/AuthContext";
+import { AuthContext } from "./providers/AuthContext";
 import { useState } from "react";
 import RoutersComponents from "./RoutersComponents";
-
+import GlobalStyle from "./styles/GlobalStyle"
 export default function App() {
   const [token, setToken] = useState("");
 
