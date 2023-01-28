@@ -1,20 +1,26 @@
 import styled from "styled-components";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import user from "../img/user.png";
 import bag from "../img/bag.png";
+import { useNavigate } from "react-router-dom";
 
-export default function Rota() {
-  const [products, setProducts] = useState([]);
+export default function Usuario() {
+  const { productId } = useParams();
+  const [product, setProduct] = useState({});
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
-    const URL = `${process.env.REACT_APP_API_URL}/products`;
-    const promise = axios.get(URL);
-    promise.then((res) => setProducts(res.data));
+    const URL = `${process.env.REACT_APP_API_URL}/products/`;
+    const promise = axios.get(URL ,{ params: {id:`${productId}`} });
+    promise.then((res) => setProduct(res.data));
     promise.catch((err) => console.log(err.data));
   }, []);
-  if (products === undefined) {
+
+  if (product === undefined) {
     return <div>Carregando...</div>;
   }
   return (
@@ -25,18 +31,15 @@ export default function Rota() {
         <img src={bag} alt={bag} />
       </Container>
 
+      <Link to={`/`} style={linkStyle}>
+        <p>Voltar a Loja</p>
+      </Link>
       <Products>
-        {products.map((product) => (
-          <Product key={product.name}>
-            <Link to={`/products/${product._id}`} style={linkStyle}>
-              <img src={product.image} alt={product.name} />
-              <p>
-                {product.name} {product.price}
-              </p>
-              {/* {product.description} */}
-            </Link>
-          </Product>
-        ))}
+        <img src={product.image} alt={product.name} />
+        <p>
+          {product.name} {product.price}
+        </p>
+        {product.description}
       </Products>
     </>
   );
@@ -83,32 +86,4 @@ const Products = styled.div`
   align-content: space-between;
   text-decoration: none;
   color: #0a334e;
-`;
-const Product = styled.div`
-  width: 200px;
-  height: 360px;
-  margin-left: 70px;
-  margin-bottom: 10px;
-  background: #ffffff;
-  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  display: flex;
-  flex-direction: row;
-  align-content: space-around;
-  align-items: center;
-  justify-content: center;
-  img {
-    margin-top:10px;
-    width: 150px;
-    height: 300px;
-  }
-  p {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 18px;
-    letter-spacing: 0.04em;
-    color: #0a334e;
-  }
 `;
