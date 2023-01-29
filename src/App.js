@@ -3,15 +3,25 @@ import styled from "styled-components";
 import { AuthContext } from "./providers/AuthContext";
 import { useState } from "react";
 import RoutersComponents from "./RoutersComponents";
-import GlobalStyle from "./styles/GlobalStyle"
+import GlobalStyle from "./styles/GlobalStyle";
 export default function App() {
   const [token, setToken] = useState("");
-
+  const [formLogin, setFormLogin] = useState({ email: "", password: "" });
+  const [formCadastro, setFormCadastro] = useState({
+    email: "",
+    name: "",
+    password: "",
+    confirmPpassword: "",
+  });
   return (
     <AuthContext.Provider
       value={{
         token,
         setToken,
+        formLogin, 
+        setFormLogin,
+        formCadastro, 
+        setFormCadastro,
       }}
     >
       <Container>
