@@ -48,6 +48,9 @@ export default function Usuario() {
       </Container>
 
       <Products>
+      <Link to={`/home`} style={linkStyle}>
+          voltar a pagina
+        </Link>
         <img src={product.image} alt={product.name} />
         <h1>
           {product.name} R$ {product.price},00
