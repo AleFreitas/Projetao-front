@@ -33,10 +33,12 @@ export default function Login() {
     requisicao.then((req) => {
       console.log(req.data);
       setFormLogin(req.data);
+      localStorage.removeItem("")
+      navigate('/')
     });
 
     requisicao.catch((err) => {
-      alert(err.response.data.message);
+      alert(err.response.data);
     });
   };
 

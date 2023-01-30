@@ -10,7 +10,6 @@ import CartItems from "../components/CartItems";
 
 export default function Rota() {
   const { token } = React.useContext(AuthContext);
-  console.log(token);
   const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -27,7 +26,7 @@ export default function Rota() {
     const URL = `${process.env.REACT_APP_API_URL}/cart-items`;
     const promise = axios.get(URL, config);
     promise.then((res) => {
-      setCartItems(res.data);
+      setCartItems([...res.data]);
     });
     promise.catch((err) => console.log(err.data));
   }, [cartItems]);
