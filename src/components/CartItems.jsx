@@ -17,19 +17,10 @@ export default function CartItems(props) {
             props.setIPrice(res.data.price);
         });
         promise.catch((err) => console.log(err.data));
-    }, [cartItems]);
-    useEffect(() => {
-        const URL = `${process.env.REACT_APP_API_URL}/cart-items`;
-        const promise = axios.get(URL, config);
-        promise.then((res) => {
-            setCartItems(res.data);
-        });
-        promise.catch((err) => console.log(err.data));
-    }, [cartItems]);
-
+    }, [props.cartItems]);
     return (
         <CartItemsDiv>
-            {cartItems.length === 0 ? <p>Ainda não há itens no carrinho</p> : cartItems.map(i =>
+            {props.cartItems.length === 0 ? <p>Ainda não há itens no carrinho</p> : props.cartItems.map(i =>
                 <CartItem>
                     <img src={i.image} />
                     <ProductDetails>

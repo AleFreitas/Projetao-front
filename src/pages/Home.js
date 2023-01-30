@@ -12,19 +12,34 @@ export default function Rota() {
   const { token } = React.useContext(AuthContext);
   const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [cartDisplay, setCartDisplay] = useState(false);
   const [cartItemsPrice, setItemsPrice] = useState(0);
   const navigate = useNavigate();
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  }
+
+  useEffect(() => {
+    const URL = `${process.env.REACT_APP_API_URL}/cart-items`;
+    const promise = axios.get(URL, config);
+    promise.then((res) => {
+      setCartItems(res.data);
+    });
+    promise.catch((err) => console.log(err.data));
+  }, [cartItems]);
 
   useEffect(() => {
     const URL = `${process.env.REACT_APP_API_URL}/products`;
     const promise = axios.get(URL);
     promise.then((res) => {
       setProducts(res.data.dados);
-      if(localStorage.getItem("TokenProjetao") !== null){
+      if (localStorage.getItem("TokenProjetao") !== null) {
         setToken(localStorage.getItem("TokenProjetao"));
-      }else{
-        localStorage.setItem("TokenProjetao",res.data.token)
+      } else {
+        localStorage.setItem("TokenProjetao", res.data.token)
         setToken(res.data.token);
       }
     });
@@ -71,7 +86,7 @@ export default function Rota() {
             }}
           ></ion-icon>
         </CartTitle>
-        <CartItems token={token} setPrice={setItemsPrice} setIPrice={setItemsPrice}/>
+        <CartItems token={token} setPrice={setItemsPrice} setIPrice={setItemsPrice} cartItems={cartItems}/>
         <CartCheckoutDiv>
           <Details>
             <div>
