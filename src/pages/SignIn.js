@@ -32,6 +32,7 @@ export default function Login() {
 
     requisicao.then((req) => {
       console.log(req.data);
+      navigate("/");
       setFormLogin(req.data);
     });
 
