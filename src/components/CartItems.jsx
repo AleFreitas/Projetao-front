@@ -11,18 +11,16 @@ export default function CartItems(props) {
         }
     }
     useEffect(() => {
-        const URL = `${process.env.REACT_APP_API_URL}/cart-items`;
+        const URL = `${process.env.REACT_APP_API_URL}/total-price`;
         const promise = axios.get(URL, config);
         promise.then((res) => {
-            setCartItems(res.data);
+            props.setIPrice(res.data.price);
         });
         promise.catch((err) => console.log(err.data));
-    }, []);
-    console.log(cartItems)
-
+    }, [props.cartItems]);
     return (
         <CartItemsDiv>
-            {cartItems.length === 0 ? <p>Ainda não há itens no carrinho</p> : cartItems.map(i =>
+            {props.cartItems.length === 0 ? <p>Ainda não há itens no carrinho</p> : props.cartItems.map(i =>
                 <CartItem>
                     <img src={i.image} />
                     <ProductDetails>
@@ -55,7 +53,7 @@ export default function CartItems(props) {
 }
 
 const CartItemsDiv = styled.div`
-  background-color: blue;
+  background-color:#e7e7e7;
   overflow: auto;
   width:100%;
   height:70%;
