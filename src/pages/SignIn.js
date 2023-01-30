@@ -35,6 +35,7 @@ export default function Login() {
     requisicao.then((req) => {
       setSubmited(false)
       console.log(req.data);
+      navigate("/");
       setFormLogin(req.data);
       localStorage.removeItem("")
       navigate('/')

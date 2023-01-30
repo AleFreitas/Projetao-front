@@ -110,7 +110,6 @@ const Products = styled.div`
   margin-bottom: 50px;
   width: 100%;
   height: 600px;
-  background: #ffffff;
   text-decoration: none;
   color: #0a334e;
   display: flex;
