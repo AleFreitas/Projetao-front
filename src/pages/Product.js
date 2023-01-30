@@ -41,7 +41,10 @@ export default function Usuario() {
         <Text onClick={()=>{navigate("/")}}>
           Serenity
         </Text>
-        <img src={logout} alt={logout} />
+        <img src={logout} onClick={()=>{
+          localStorage.removeItem("TokenProjetao");
+          navigate("/");
+        }} alt={logout} />
       </Container>
 
       <Products>
@@ -113,6 +116,7 @@ const Container = styled.div`
   img {
     width: 40px;
     height: 40px;
+    cursor:pointer;
   }
 `;
 const Products = styled.div`

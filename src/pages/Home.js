@@ -68,7 +68,10 @@ export default function Rota() {
             setCartDisplay(true);
           }}
         />
-        <img src={logout} style={{marginLeft: "10px", width: "30px", height: "30px"}} alt={logout} />
+        <img src={logout} onClick={()=>{
+          localStorage.removeItem("TokenProjetao");
+          window.location.reload(true);
+        }}style={{marginLeft: "10px", width: "30px", height: "30px"}} alt={logout} />
         </div>
         
       </Container>
@@ -230,6 +233,7 @@ const Container = styled.div`
   img {
     width: 40px;
     height: 40px;
+    cursor:pointer;
   }
 `;
 const Products = styled.div`
