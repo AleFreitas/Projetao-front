@@ -4,6 +4,7 @@ import React from "react";
 // import Cadastro from "../src/pages/Cadastro";
 import Home from "../src/pages/Home";
 import Product from "../src/pages/Product";
+import CheckOut from "../src/pages/CheckOut";
 
 function RoutersComponents() {
   return (
@@ -13,6 +14,7 @@ function RoutersComponents() {
         <Route path="/product/:id" element={<Product /> } />
         {/* <Route path="/cadastro" element={<Cadastro />} /> */}
         {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/checkout" element={<CheckOut/> } />
       </Routes>
     </Router>
   );
