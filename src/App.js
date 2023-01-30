@@ -14,6 +14,7 @@ export default function App() {
         setToken,
       }}
     >
+      <GlobalStyle/>
       <Container>
         <RoutersComponents />
       </Container>
