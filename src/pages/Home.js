@@ -238,7 +238,7 @@ const Products = styled.div`
 `;
 const Product = styled.div`
   width: 200px;
-  height: 360px;
+  height: 320px;
   margin-left: 70px;
   margin-bottom: 10px;
   background: #ffffff;
@@ -249,11 +249,12 @@ const Product = styled.div`
   align-items: center;
   justify-content: center;
   img {
-    margin-top: 10px;
+    margin: 10px;
     width: 150px;
-    height: 300px;
+    height: 240px;
   }
   p {
+    margin:0px 0px 10px 10px;
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400 bold;
