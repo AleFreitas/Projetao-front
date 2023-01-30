@@ -38,15 +38,10 @@ export default function Usuario() {
         <Link to={`/sign-in`} style={linkStyle}>
           <img src={user} alt={user} />
         </Link>
-<<<<<<< HEAD
-        <Text> Nome da Loja </Text>
-        <img src={logout} alt={logout} />
-=======
         <Text onClick={()=>{navigate("/")}}>
           Serenity
         </Text>
-        <img src={bag} alt={bag} />
->>>>>>> c0253a5453dac7dbf3eea0bac6f21f393e56305f
+        <img src={logout} alt={logout} />
       </Container>
 
       <Products>
