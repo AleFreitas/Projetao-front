@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../providers/AuthContext";
+import Loading from "../components/Loading.jsx";
 
 export default function Login() {
   const { token } = React.useContext(AuthContext);
@@ -12,6 +13,7 @@ export default function Login() {
     }
   }
   const navigate = useNavigate();
+  const [submited, setSubmited] = React.useState(false);
   const { formLogin, setFormLogin } = useContext(AuthContext);
 
   const handleForm = (e) => {
@@ -23,7 +25,7 @@ export default function Login() {
 
   const fazerLogin = (e) => {
     e.preventDefault();
-
+    setSubmited(true)
     const requisicao = axios.post(
       `${process.env.REACT_APP_API_URL}/sign-in`,
       formLogin,
@@ -31,6 +33,7 @@ export default function Login() {
     );
 
     requisicao.then((req) => {
+      setSubmited(false)
       console.log(req.data);
       setFormLogin(req.data);
       localStorage.removeItem("")
@@ -38,6 +41,7 @@ export default function Login() {
     });
 
     requisicao.catch((err) => {
+      setSubmited(false);
       alert(err.response.data);
     });
   };
@@ -69,7 +73,7 @@ export default function Login() {
               required
             />
 
-            <button type="submit">Entrar</button>
+            <button type="submit">{submited ? <Loading/> : "Entrar"}</button>
           </form>
         </Form>
 

@@ -8,6 +8,7 @@ import { AuthContext } from "../providers/AuthContext";
 export default function Cadastro() {
   const navigate = useNavigate();
   const { formCadastro, setFormCadastro } = useContext(AuthContext);
+  const [submited, setSubmited] = React.useState();
 
   const handleCadastro = (e) => {
     setFormCadastro({
@@ -18,12 +19,13 @@ export default function Cadastro() {
 
   const fazerCadastro = (e) => {
     e.preventDefault();
-
+    setSubmited(true)
     const requisicao = axios.post(
       `${process.env.REACT_APP_API_URL}/sign-up`,
       formCadastro
     );
     requisicao.then((req) => {
+      setSubmited(false)
       console.log(req.data);
       setFormCadastro(req.data);
       alert("Cadastro realizado com sucesso!");
@@ -31,6 +33,7 @@ export default function Cadastro() {
     });
 
     requisicao.catch((err) => {
+      setSubmited(false)
       alert(err.response.data.message);
     });
   };
