@@ -38,13 +38,11 @@ export default function Usuario() {
         <Link to={`/sign-in`} style={linkStyle}>
           <img src={user} alt={user} />
         </Link>
-        <Text> Nome da Loja </Text>
+        <Text onClick={()=>{navigate("/")}}>
+          Serenity
+        </Text>
         <img src={bag} alt={bag} />
       </Container>
-
-      <Link to={`/`} style={linkStyle}>
-        <p>Voltar a Loja</p>
-      </Link>
 
       <Products>
         <img src={product.image} alt={product.name} />
@@ -56,17 +54,17 @@ export default function Usuario() {
           onClick={() => {
             setSubmited(true);
             const body = {
-              "product":{
-              "name":product.name,
-              "price":product.price,
-              "description":product.description,
-              "image":product.image,
-              "quantity":1
+              "product": {
+                "name": product.name,
+                "price": product.price,
+                "description": product.description,
+                "image": product.image,
+                "quantity": 1
               }
             }
             const URL = `${process.env.REACT_APP_API_URL}/post-item`;
-            const promise = axios.post(URL,body,config);
-            promise.then((res)=>{
+            const promise = axios.post(URL, body, config);
+            promise.then((res) => {
               setSubmited(false)
             })
             promise.catch((err) => {
@@ -75,7 +73,7 @@ export default function Usuario() {
             });
           }}
         >
-          {submited ? <Loading/> : "Adicionar ao Carrinho"}
+          {submited ? <Loading /> : "Adicionar ao Carrinho"}
         </button>
       </Products>
     </>
@@ -85,15 +83,18 @@ export default function Usuario() {
 const Text = styled.div`
   display: flex;
   justify-content: center;
-  width: 326px;
+  width: 200px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 46px;
   line-height: 50px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
+  cursor:pointer;
 `;
+
 const linkStyle = {
   margin: "5px",
   textDecoration: "none",
