@@ -8,7 +8,7 @@ export default function Login() {
   const { token } = React.useContext(AuthContext);
   const config = {
     headers: {
-      "Authorization": `Bearer ${props.token}`
+      "Authorization": `Bearer ${token}`
     }
   }
   const navigate = useNavigate();
