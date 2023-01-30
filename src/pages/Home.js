@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import React from 'react';
+import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, navigate, useNavigate } from "react-router-dom";
 import user from "../img/user.png";
 import bag from "../img/bag.png";
 import { AuthContext } from "../providers/AuthContext";
 import CartItems from "../components/CartItems";
 
 export default function Rota() {
-  const { token } = React.useContext(AuthContext)
-  const { setToken } = React.useContext(AuthContext)
+  const { token } = React.useContext(AuthContext);
+  const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [cartDisplay, setCartDisplay] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -32,9 +32,16 @@ export default function Rota() {
   return (
     <>
       <Container>
-        <img src={user} alt={user} />
-        <p> Nome da loja </p>
-        <Cartimg src={bag} alt={bag} onClick={()=>{setCartDisplay(true)}} />
+      <Link to={`/sign-in`} style={linkStyle}>
+        <img src={user} alt={user} /> </Link>
+        <Text> Nome da Loja </Text>
+        <Cartimg
+          src={bag}
+          alt={bag}
+          onClick={() => {
+            setCartDisplay(true);
+          }}
+        />
       </Container>
 
       <Products>
@@ -43,9 +50,8 @@ export default function Rota() {
             <Link to={`/products/${product._id}`} style={linkStyle}>
               <img src={product.image} alt={product.name} />
               <p>
-                {product.name} {product.price}
+                {product.name} R${product.price}
               </p>
-              {/* {product.description} */}
             </Link>
           </Product>
         ))}
@@ -54,9 +60,14 @@ export default function Rota() {
       <Cart display={cartDisplay ? "" : "none"}>
         <CartTitle>
           <p>Shopping Cart</p>
-          <ion-icon name="close-outline" onClick={()=>{setCartDisplay(false)}}></ion-icon>
+          <ion-icon
+            name="close-outline"
+            onClick={() => {
+              setCartDisplay(false);
+            }}
+          ></ion-icon>
         </CartTitle>
-        <CartItems token={token} setPrice={setItemsPrice}/>
+        <CartItems token={token} setPrice={setItemsPrice} />
         <CartCheckoutDiv>
           <Details>
             <div>
@@ -66,7 +77,13 @@ export default function Rota() {
             <p>{`$${cartItemsPrice.toFixed(2)}`}</p>
           </Details>
           <CheckoutRedirect>
-            <button onClick={()=>{navigate("/checkout")}}>Checkout</button>
+            <button
+              onClick={() => {
+                navigate("/checkout");
+              }}
+            >
+              Checkout
+            </button>
           </CheckoutRedirect>
         </CartCheckoutDiv>
       </Cart>
@@ -75,79 +92,91 @@ export default function Rota() {
 }
 
 const Cart = styled.div`
-  display:${props => props.display};
+  display: ${(props) => props.display};
   background-color: red;
-  position:fixed;
-  right:0;
-  top:0;
-  width:500px;
-  height:100%;
-  min-height:100vh;
-  border-radius:20px;
-  box-sizing:border-box;
-  padding:20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 500px;
+  height: 100%;
+  min-height: 100vh;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 20px;
 `;
 
 const CartTitle = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  p{
+  p {
     font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
-  }ion-icon{
+  }
+  ion-icon {
     font-weight: 700;
-    font-size:30px;
-    cursor:pointer;
+    font-size: 30px;
+    cursor: pointer;
   }
 `;
 
 const CartCheckoutDiv = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   background-color: green;
-  width:100%;
-  height:100px;
+  width: 100%;
+  height: 100px;
 `;
 
 const Details = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  p{
+  p {
     font-size: 18px;
   }
-  div{
-    h1{
-      font-size:18px;
+  div {
+    h1 {
+      font-size: 18px;
       line-height: 5px;
     }
-    p{
-      font-size:13px;
+    p {
+      font-size: 13px;
       line-height: 5px;
     }
   }
 `;
 
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 326px;
+  height: 50px;
+  font-family: "Saira Stencil One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 50px;
+  color: #ffffff;
+`;
 const CheckoutRedirect = styled.div`
   display: flex;
   background-color: blue;
   justify-content: center;
-  button{
-    border:none;
-    width:250px;
+  button {
+    border: none;
+    width: 250px;
     height: 40px;
     font-size: 25px;
     border-radius: 5px;
-    cursor:pointer
+    cursor: pointer;
   }
 `;
 
-
 const Cartimg = styled.img`
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const linkStyle = {
@@ -169,18 +198,9 @@ const Container = styled.div`
     width: 40px;
     height: 40px;
   }
-  p {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 30px;
-    letter-spacing: 0.04em;
-    color: #0a334e;
-  }
 `;
 const Products = styled.div`
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 50px;
   width: 95%;
   height: 600px;
@@ -206,14 +226,14 @@ const Product = styled.div`
   align-items: center;
   justify-content: center;
   img {
-    margin-top:10px;
+    margin-top: 10px;
     width: 150px;
     height: 300px;
   }
   p {
     font-family: "Roboto";
     font-style: normal;
-    font-weight: 400;
+    font-weight: 400 bold;
     font-size: 18px;
     line-height: 18px;
     letter-spacing: 0.04em;

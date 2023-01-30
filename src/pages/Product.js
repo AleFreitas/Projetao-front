@@ -8,45 +8,66 @@ import bag from "../img/bag.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Usuario() {
-  const { productId } = useParams();
+  const params = useParams();
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
-  
 
   useEffect(() => {
-    const URL = `${process.env.REACT_APP_API_URL}/products/`;
-    const promise = axios.get(URL ,{ params: {id:`${productId}`} });
+    const URL = `${process.env.REACT_APP_API_URL}/products/${params.id}`;
+    const promise = axios.get(URL);
     promise.then((res) => setProduct(res.data));
     promise.catch((err) => console.log(err.data));
   }, []);
 
   if (product === undefined) {
-    return <div>Carregando...</div>;
+    return <div>Carregando... </div>;
   }
   return (
     <>
       <Container>
-        <img src={user} alt={user} />
-        <p> Nome da loja </p>
+        <Link to={`/sign-in`} style={linkStyle}>
+          <img src={user} alt={user} />
+        </Link>
+        <Text> Nome da Loja </Text>
         <img src={bag} alt={bag} />
       </Container>
 
       <Link to={`/`} style={linkStyle}>
         <p>Voltar a Loja</p>
       </Link>
+
       <Products>
         <img src={product.image} alt={product.name} />
-        <p>
-          {product.name} {product.price}
-        </p>
-        {product.description}
+        <h1>
+          {product.name} R$ {product.price},00
+        </h1>
+        <p>{product.description} </p>
+        <button
+          onClick={() => {
+            navigate("/cart");
+          }}
+        >
+          Adicionar ao Carrinho
+        </button>
       </Products>
     </>
   );
 }
 
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 326px;
+  height: 50px;
+  font-family: "Saira Stencil One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 50px;
+  color: #ffffff;
+`;
 const linkStyle = {
-  margin: "1rem",
+  margin: "5px",
   textDecoration: "none",
   color: "#80b4a9",
 };
@@ -64,26 +85,60 @@ const Container = styled.div`
     width: 40px;
     height: 40px;
   }
-  p {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 30px;
-    letter-spacing: 0.04em;
-    color: #0a334e;
-  }
 `;
 const Products = styled.div`
   margin-top: 20px;
   margin-bottom: 50px;
-  width: 95%;
+  width: 100%;
   height: 600px;
   background: #ffffff;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: space-between;
   text-decoration: none;
   color: #0a334e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400 bold;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: #0a334e;
+  img {
+    width: 300px;
+    height: 600px;
+  }
+  h1 {
+    width: 300px;
+    text-align: center;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400 bold;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0.04em;
+    color: #0a334e;
+  }
+  p {
+    width: 300px;
+    text-align: center;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400 bold;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 0.04em;
+    color: #0a334e;
+  }
+  button {
+    border: none;
+    width: 300px;
+    height: 60px;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: #0a334e;
+    color: #ffffff;
+    cursor: pointer;
+  }
 `;
