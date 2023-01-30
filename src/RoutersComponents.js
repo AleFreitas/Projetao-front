@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
-import Login from "../src/pages/Login";
-import Cadastro from "../src/pages/Cadastro";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp.js";
 import Home from "../src/pages/Home";
 import Product from "../src/pages/Product";
 import CheckOut from "../src/pages/CheckOut";
@@ -12,8 +12,8 @@ function RoutersComponents() {
       <Routes>
         <Route path="/" element={<Home /> } />
         <Route path="/products/:id" element={<Product /> } />
-        <Route path="/sign-up" element={<Cadastro />} />
-        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
         <Route path="/checkout" element = {<CheckOut/>}/>
       </Routes>
     </Router>
