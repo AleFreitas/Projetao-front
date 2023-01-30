@@ -175,7 +175,7 @@ const Details = styled.div`
 const Text = styled.div`
   display: flex;
   justify-content: center;
-  width: 326px;
+  width: 200px;
   height: 50px;
   font-family: "Pacifico";
   font-style: normal;
@@ -184,6 +184,7 @@ const Text = styled.div`
   line-height: 50px;
   color: #ffffff;
   text-shadow: 2px 2px #0a334e;
+  cursor:pointer;
   
 `;
 const CheckoutRedirect = styled.div`
