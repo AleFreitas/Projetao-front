@@ -8,8 +8,10 @@ import bag from "../img/bag.png";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthContext";
+import Loading from "../components/Loading.jsx";
 
 export default function Usuario() {
+  const [submited, setSubmited] = React.useState(false);
   const params = useParams();
   const { token } = React.useContext(AuthContext);
   const config = {
@@ -52,6 +54,7 @@ export default function Usuario() {
         <p>{product.description} </p>
         <button
           onClick={() => {
+            setSubmited(true);
             const body = {
               "product":{
               "name":product.name,
@@ -63,10 +66,16 @@ export default function Usuario() {
             }
             const URL = `${process.env.REACT_APP_API_URL}/post-item`;
             const promise = axios.post(URL,body,config);
-            promise.catch((err) => console.log(err.data));
+            promise.then((res)=>{
+              setSubmited(false)
+            })
+            promise.catch((err) => {
+              setSubmited(false)
+              console.log(err.data)
+            });
           }}
         >
-          Adicionar ao Carrinho
+          {submited ? <Loading/> : "Adicionar ao Carrinho"}
         </button>
       </Products>
     </>
@@ -109,7 +118,7 @@ const Products = styled.div`
   margin-top: 20px;
   margin-bottom: 50px;
   width: 100%;
-  height: 600px;
+  height: 100%;
   text-decoration: none;
   color: #0a334e;
   display: flex;
@@ -125,21 +134,23 @@ const Products = styled.div`
   color: #0a334e;
   img {
     width: 300px;
-    height: 600px;
+    height: 400px;
+    margin-bottom:10px;
   }
   h1 {
-    width: 300px;
+    width: 100%;
     text-align: center;
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400 bold;
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 30px;
+    line-height: 30px;
     letter-spacing: 0.04em;
     color: #0a334e;
+    margin-bottom: 20px;
   }
   p {
-    width: 300px;
+    width: 450px;
     text-align: center;
     font-family: "Roboto";
     font-style: normal;
@@ -148,6 +159,7 @@ const Products = styled.div`
     line-height: 18px;
     letter-spacing: 0.04em;
     color: #0a334e;
+    margin-bottom: 20px;
   }
   button {
     border: none;
