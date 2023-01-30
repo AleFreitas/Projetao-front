@@ -12,7 +12,6 @@ export default function CheckOut() {
   const [form, setForm] = useState({});
   const [products, setProducts] = useState([]);
   const [balance, setBalance] = useState(0);
-  const [balance, setBalance] = useState(0);
   const nav = useNavigate();
   const { token } = useContext(AuthContext);
   console.log(token);
@@ -27,7 +26,6 @@ export default function CheckOut() {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get(`${process.env.REACT_APP_API_URL}/cart-items`, authorization)
       .get(`${process.env.REACT_APP_API_URL}/cart-items`, authorization)
       .then((res) => {
         setProducts(res.data);
@@ -73,7 +71,6 @@ export default function CheckOut() {
       <BoxContainer>
         <Form>
           <Label>Informações de contato</Label>
-          <Label>Informações de contato</Label>
           <Field
             placeholder={"E-mail"}
             name="email"
@@ -100,9 +97,6 @@ export default function CheckOut() {
             placeholder={"Primeiro Nome"}
             name="FirstName"
             type="text"
-            placeholder={"Primeiro Nome"}
-            name="FirstName"
-            type="text"
             onChange={(e) =>
               handleForm({
                 name: e.target.name,
@@ -111,8 +105,6 @@ export default function CheckOut() {
             }
           />
           <Field
-            placeholder={"Último Sobrenome"}
-            name="LastName"
             placeholder={"Último Sobrenome"}
             name="LastName"
             type="text"
@@ -126,9 +118,6 @@ export default function CheckOut() {
           <Label>Informações de Entrega</Label>
           <Label>Informações de Entrega</Label>
           <Field
-            placeholder={"CEP"}
-            name="ZIPCode"
-            type="number"
             placeholder={"CEP"}
             name="ZIPCode"
             type="number"
@@ -142,7 +131,6 @@ export default function CheckOut() {
           <Field
             placeholder={"Endereço"}
             name="AddressDescription"
-            name="AddressDescription"
             type="text"
             onChange={(e) =>
               handleForm({
@@ -153,7 +141,6 @@ export default function CheckOut() {
           />
           <Field
             placeholder={"Número da Casa/Prédio"}
-            name="AddressNumber"
             name="AddressNumber"
             type="number"
             onChange={(e) =>
@@ -365,16 +352,12 @@ const CartProducts = styled.div`
   }
   p {
     display: flex;
-  p {
-    display: flex;
     justify-content: right;
     font-family: "Raleway";
     font-style: normal;
     font-weight: 200;
     font-size: 18px;
   }
-  h5 {
-    display: flex;
   h5 {
     display: flex;
     justify-content: right;
