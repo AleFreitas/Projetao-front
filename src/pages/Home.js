@@ -32,7 +32,7 @@ export default function Rota() {
       });
       promise.catch((err) => console.log(err.data));
     }
-  }, [callCartItems]);
+  }, [callCartItems,cartItems]);
 
   useEffect(() => {
     const URL = `${process.env.REACT_APP_API_URL}/products`;
