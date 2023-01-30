@@ -13,7 +13,6 @@ export default function Rota() {
   const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [cartDisplay, setCartDisplay] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
   const [cartItemsPrice, setItemsPrice] = useState(0);
   const navigate = useNavigate();
 
@@ -72,7 +71,7 @@ export default function Rota() {
             }}
           ></ion-icon>
         </CartTitle>
-        <CartItems token={token} setPrice={setItemsPrice} />
+        <CartItems token={token} setPrice={setItemsPrice} setIPrice={setItemsPrice}/>
         <CartCheckoutDiv>
           <Details>
             <div>
@@ -98,7 +97,7 @@ export default function Rota() {
 
 const Cart = styled.div`
   display: ${(props) => props.display};
-  background-color: red;
+  background-color: #e7e7e7;
   position: fixed;
   right: 0;
   top: 0;
@@ -130,7 +129,7 @@ const CartTitle = styled.div`
 const CartCheckoutDiv = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: green;
+  background-color: #e7e7e7;
   width: 100%;
   height: 100px;
 `;
@@ -168,9 +167,10 @@ const Text = styled.div`
 `;
 const CheckoutRedirect = styled.div`
   display: flex;
-  background-color: blue;
+  background-color: #e7e7e7;
   justify-content: center;
   button {
+    background-color: #ffffff;
     border: none;
     width: 250px;
     height: 40px;

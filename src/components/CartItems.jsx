@@ -11,14 +11,21 @@ export default function CartItems(props) {
         }
     }
     useEffect(() => {
+        const URL = `${process.env.REACT_APP_API_URL}/total-price`;
+        const promise = axios.get(URL, config);
+        promise.then((res) => {
+            props.setIPrice(res.data.price);
+        });
+        promise.catch((err) => console.log(err.data));
+    }, [cartItems]);
+    useEffect(() => {
         const URL = `${process.env.REACT_APP_API_URL}/cart-items`;
         const promise = axios.get(URL, config);
         promise.then((res) => {
             setCartItems(res.data);
         });
         promise.catch((err) => console.log(err.data));
-    }, []);
-    console.log(cartItems)
+    }, [cartItems]);
 
     return (
         <CartItemsDiv>
@@ -55,7 +62,7 @@ export default function CartItems(props) {
 }
 
 const CartItemsDiv = styled.div`
-  background-color: blue;
+  background-color:#e7e7e7;
   overflow: auto;
   width:100%;
   height:70%;
