@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link, navigate, useNavigate } from "react-router-dom";
 import user from "../img/user.png";
 import bag from "../img/bag.png";
+import logout from "../img/logout.png";
 import { AuthContext } from "../providers/AuthContext";
 import CartItems from "../components/CartItems";
 
@@ -58,6 +59,8 @@ export default function Rota() {
         <Link to={`/sign-in`} style={linkStyle}>
           <img src={user} alt={user} /> </Link>
         <Text> Serenity </Text>
+        <div> 
+        
         <Cartimg
           src={bag}
           alt={bag}
@@ -65,6 +68,9 @@ export default function Rota() {
             setCartDisplay(true);
           }}
         />
+        <img src={logout} style={{marginLeft: "10px", width: "30px", height: "30px"}} alt={logout} />
+        </div>
+        
       </Container>
 
       <Products>

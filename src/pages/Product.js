@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import user from "../img/user.png";
-import bag from "../img/bag.png";
+import logout from "../img/logout.png";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthContext";
@@ -37,7 +37,7 @@ export default function Usuario() {
           <img src={user} alt={user} />
         </Link>
         <Text> Nome da Loja </Text>
-        <img src={bag} alt={bag} />
+        <img src={logout} alt={logout} />
       </Container>
 
       <Link to={`/`} style={linkStyle}>
