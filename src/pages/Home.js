@@ -10,6 +10,7 @@ import CartItems from "../components/CartItems";
 
 export default function Rota() {
   const { token } = React.useContext(AuthContext);
+  console.log(token);
   const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -53,7 +54,7 @@ export default function Rota() {
       <Container>
         <Link to={`/sign-in`} style={linkStyle}>
           <img src={user} alt={user} /> </Link>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Cartimg
           src={bag}
           alt={bag}
@@ -173,12 +174,14 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 46px;
   line-height: 50px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
+  
 `;
 const CheckoutRedirect = styled.div`
   display: flex;
@@ -223,13 +226,11 @@ const Products = styled.div`
   margin-top: 50px;
   margin-bottom: 50px;
   width: 95%;
-  height: 600px;
-  background: #ffffff;
+  gap:10px;
+  padding:15px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: space-between;
-  text-decoration: none;
   color: #0a334e;
 `;
 const Product = styled.div`
@@ -242,7 +243,6 @@ const Product = styled.div`
   border-radius: 3px;
   display: flex;
   flex-direction: row;
-  align-content: space-around;
   align-items: center;
   justify-content: center;
   img {

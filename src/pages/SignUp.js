@@ -38,7 +38,7 @@ export default function Cadastro() {
   return (
     <>
       <Container>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Link to={`/`} style={linkStyle}>
           <p>Voltar a Loja</p>
         </Link>
@@ -101,15 +101,17 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 64px;
   line-height: 50px;
+  margin-bottom:30px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
 `;
 const Container = styled.div`
-  height: 1300px;
+  height:100vh;
   width: 100%;
   display: flex;
   flex-direction: column;

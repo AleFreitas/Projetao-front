@@ -43,7 +43,7 @@ export default function Login() {
   return (
     <>
       <Container>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Link to={`/`} style={linkStyle}>
           <p>Voltar a Loja</p>
         </Link>
@@ -90,22 +90,24 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 64px;
+  margin-bottom:50px;
   line-height: 50px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
 `;
 const Container = styled.div`
-  height: 1300px;
   width: 100%;
+  height:100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  background: #80b4a9;
+  background-color: #80b4a9;
 `;
 const Form = styled.div`
   input {
