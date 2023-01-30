@@ -5,6 +5,12 @@ import React, { useContext } from "react";
 import { AuthContext } from "../providers/AuthContext";
 
 export default function Login() {
+  const { token } = React.useContext(AuthContext);
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${props.token}`
+    }
+  }
   const navigate = useNavigate();
   const { formLogin, setFormLogin } = useContext(AuthContext);
 
@@ -20,7 +26,8 @@ export default function Login() {
 
     const requisicao = axios.post(
       `${process.env.REACT_APP_API_URL}/sign-in`,
-      formLogin
+      formLogin,
+      config
     );
 
     requisicao.then((req) => {
