@@ -5,10 +5,18 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import user from "../img/user.png";
 import bag from "../img/bag.png";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthContext";
 
 export default function Usuario() {
   const params = useParams();
+  const { token } = React.useContext(AuthContext);
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  }
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
 
@@ -44,7 +52,18 @@ export default function Usuario() {
         <p>{product.description} </p>
         <button
           onClick={() => {
-            navigate("/cart");
+            const body = {
+              "product":{
+              "name":product.name,
+              "price":product.price,
+              "description":product.description,
+              "image":product.image,
+              "quantity":1
+              }
+            }
+            const URL = `${process.env.REACT_APP_API_URL}/post-item`;
+            const promise = axios.post(URL,body,config);
+            promise.catch((err) => console.log(err.data));
           }}
         >
           Adicionar ao Carrinho

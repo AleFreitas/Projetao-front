@@ -7,7 +7,7 @@ export default function CartItems(props) {
     const [cartItems, setCartItems] = useState([])
     const config = {
         headers: {
-            "Authorization": `Bearer 013fcf1c-63ed-4846-baab-2e9f3cd01a04`
+            "Authorization": `Bearer ${props.token}`
         }
     }
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function CartItems(props) {
 const CartItemsDiv = styled.div`
   background-color: blue;
   width:100%;
-  height:400px;
+  height:70%;
 `;
 
 const CartItem = styled.div`

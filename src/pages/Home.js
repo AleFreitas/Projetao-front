@@ -22,7 +22,12 @@ export default function Rota() {
     const promise = axios.get(URL);
     promise.then((res) => {
       setProducts(res.data.dados);
-      setToken(res.data.token);
+      if(localStorage.getItem("TokenProjetao") !== null){
+        setToken(localStorage.getItem("TokenProjetao"));
+      }else{
+        localStorage.setItem("TokenProjetao",res.data.token)
+        setToken(res.data.token);
+      }
     });
     promise.catch((err) => console.log(err.data));
   }, []);
@@ -32,8 +37,8 @@ export default function Rota() {
   return (
     <>
       <Container>
-      <Link to={`/sign-in`} style={linkStyle}>
-        <img src={user} alt={user} /> </Link>
+        <Link to={`/sign-in`} style={linkStyle}>
+          <img src={user} alt={user} /> </Link>
         <Text> Nome da Loja </Text>
         <Cartimg
           src={bag}
@@ -134,17 +139,17 @@ const Details = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height:90%;
   p {
     font-size: 18px;
   }
   div {
     h1 {
       font-size: 18px;
-      line-height: 5px;
     }
     p {
       font-size: 13px;
-      line-height: 5px;
+      line-height: 15px;
     }
   }
 `;
