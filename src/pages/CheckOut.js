@@ -1,28 +1,35 @@
 import styled from "styled-components";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../providers/AuthContext";
+import React from "react";
+import { AuthContext } from "../providers/AuthContext.js";
 
 export default function CheckOut() {
   const [form, setForm] = useState({});
   const [products, setProducts] = useState([]);
+  const [balance, setBalance] = useState(0);
   const nav = useNavigate();
   const { token } = useContext(AuthContext);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (!token) {
-      nav("/login");
+      nav("/sign-in");
     }
     const authorization = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get(`${process.env.REACT_APP_API_URL}/cart`, authorization)
+      .get(`${process.env.REACT_APP_API_URL}/cart-items`, authorization)
       .then((res) => {
         setProducts(res.data);
       });
-  }, []); */
+      const URL = `${process.env.REACT_APP_API_URL}/total-price`;
+      const promise = axios.get(URL, authorization);
+      promise.then((res) => {
+          setBalance(res.data.price);
+      });
+  }, [balance]);
 
   function handleForm({ value, name }) {
     setForm({
@@ -33,7 +40,7 @@ export default function CheckOut() {
   function saveOrder(e) {
     e.preventDefault();
     axios
-      .get(`${process.env.REACT_APP_API_URL}/cart`, {
+      .post(`${process.env.REACT_APP_API_URL}/checkout`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -47,12 +54,9 @@ export default function CheckOut() {
         <Text>Serenity</Text>
       </Header>
       <SubTitle>CHECKOUT</SubTitle>
-      {/* <Osste>
-        Information<b> &nbsp; > &nbsp;</b> Shipping <b>&nbsp;>&nbsp;</b> Payment
-      </Osste> */}
       <BoxContainer>
         <Form>
-          <Label for="">Informações de contato</Label>
+          <Label>Informações de contato</Label>
           <Field
             placeholder={"E-mail"}
             name="email"
@@ -68,18 +72,6 @@ export default function CheckOut() {
             placeholder={"Telefone"}
             name="TelNumber"
             type="tel"
-            onChange={(e) =>
-              handleForm({
-                name: e.target.name,
-                value: e.target.value,
-              })
-            }
-          />
-          <Label>Informações de Entrega</Label>
-          <Field
-            placeholder={"Digite seu CEP"}
-            name="ZIPCode"
-            type="number"
             onChange={(e) =>
               handleForm({
                 name: e.target.name,
@@ -109,9 +101,21 @@ export default function CheckOut() {
               })
             }
           />
+          <Label>Informações de Entrega</Label>
+          <Field
+            placeholder={"CEP"}
+            name="ZIPCode"
+            type="number"
+            onChange={(e) =>
+              handleForm({
+                name: e.target.name,
+                value: e.target.value,
+              })
+            }
+          />
           <Field
             placeholder={"Endereço"}
-            name="Address"
+            name="AddressDescription"
             type="text"
             onChange={(e) =>
               handleForm({
@@ -122,7 +126,7 @@ export default function CheckOut() {
           />
           <Field
             placeholder={"Número da Casa/Prédio"}
-            name="AdressNumber"
+            name="AddressNumber"
             type="number"
             onChange={(e) =>
               handleForm({
@@ -152,21 +156,18 @@ export default function CheckOut() {
             <h3>Valor</h3>
           </ProdSubs>
           <Border></Border>
-          <ProdDetails>
-            <img src="https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Bubble-Tea-81ba83b.png" />
-            <div>Calça Azul</div>
-            <h3>3</h3>
-            <h4>R$: 70,00</h4>
-          </ProdDetails>
-          <Border></Border>
-          <ProdDetails>
-            <img src="https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Bubble-Tea-81ba83b.png" />
-            <div>Calça Azul</div>
-            <h3>3</h3>
-            <h4>R$: 70,00</h4>
-          </ProdDetails>
-          <Border></Border>
-          <p>Subtotal: R$: 500,00</p>
+          {products.map((product, i) => (
+            <>
+              <ProdDetails>
+                <img src={product.image} />
+                <div>{product.name}</div>
+                <h3>{product.quantity}</h3>
+                <h4>R$: {product.price}</h4>
+              </ProdDetails>
+              <Border></Border>
+            </>
+          ))}
+          <p>Subtotal: R$:{balance.toFixed(2)}</p>
           <h5>Frete: GRÁTIS!</h5>
         </CartProducts>
       </BoxContainer>
@@ -178,9 +179,9 @@ const Header = styled.div`
   width: 100%;
   height: 120px;
   background: #80b4a9;
-  position:fixed;
-  top:0;
-  left:0;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-around;
@@ -222,20 +223,6 @@ const SubTitle = styled.h1`
   line-height: 20px;
   letter-spacing: 0.04em;
 `;
-const Osste = styled.h1`
-  display: flex;
-  margin: 0 auto;
-  align-items: center;
-  font-family: "Nunito";
-  font-style: italic;
-  font-weight: 200;
-  font-size: 20px;
-  line-height: 20px;
-  letter-spacing: 0.04em;
-  b {
-    font-weight: 700;
-  }
-`;
 const Label = styled.label`
   font-family: "Raleway";
   font-style: normal;
@@ -243,6 +230,7 @@ const Label = styled.label`
   font-size: 16px;
   line-height: 30px;
   letter-spacing: 0.04em;
+  margin-bottom: 10px;
 `;
 const Field = styled.input`
   width: 600px;
@@ -252,7 +240,7 @@ const Field = styled.input`
   font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 23px;
   border: 1px solid lightgray;
   display: flex;
@@ -275,10 +263,10 @@ const Form = styled.div`
 `;
 
 const ConfirmOrder = styled.button`
-  margin-top: 30px;
+  margin-top: 20px;
   background-color: #e49882;
   /* box-shadow: 2px 2px ; */
-  
+
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
@@ -315,6 +303,9 @@ const CartProducts = styled.div`
   display: flex;
   flex-direction: column;
   h1 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
     font-family: "Raleway";
     font-style: normal;
     font-weight: 700;
@@ -322,16 +313,16 @@ const CartProducts = styled.div`
     line-height: 30px;
     letter-spacing: 0.04em;
   }
-  p{
-    display:flex;
+  p {
+    display: flex;
     justify-content: right;
     font-family: "Raleway";
     font-style: normal;
     font-weight: 200;
     font-size: 18px;
   }
-  h5{
-    display:flex;
+  h5 {
+    display: flex;
     justify-content: right;
     font-family: "Raleway";
     font-style: normal;
