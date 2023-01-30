@@ -10,6 +10,7 @@ import CartItems from "../components/CartItems";
 
 export default function Rota() {
   const { token } = React.useContext(AuthContext);
+  console.log(token);
   const { setToken } = React.useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -230,8 +231,6 @@ const Products = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: space-between;
-  text-decoration: none;
   color: #0a334e;
 `;
 const Product = styled.div`
@@ -244,7 +243,6 @@ const Product = styled.div`
   border-radius: 3px;
   display: flex;
   flex-direction: row;
-  align-content: space-around;
   align-items: center;
   justify-content: center;
   img {

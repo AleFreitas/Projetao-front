@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../providers/AuthContext";
+import React from "react";
+import { AuthContext } from "../providers/AuthContext.js";
 
 export default function CheckOut() {
   const [form, setForm] = useState({});
@@ -10,11 +11,12 @@ export default function CheckOut() {
   const [balance, setBalance] = useState(0);
   const nav = useNavigate();
   const { token } = useContext(AuthContext);
+  console.log(token);
 
   useEffect(() => {
-    /* if (!token) {
+    if (!token) {
       nav("/sign-in");
-    } */
+    }
     const authorization = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -38,11 +40,13 @@ export default function CheckOut() {
   }
   function saveOrder(e) {
     e.preventDefault();
+    const authorizacion = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/checkout`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .post(`${process.env.REACT_APP_API_URL}/checkout`, authorizacion)
       .then((res) => {
+        alert("compra concluida")
         nav("/");
       });
   }
@@ -125,7 +129,7 @@ export default function CheckOut() {
           />
           <Field
             placeholder={"Número da Casa/Prédio"}
-            name="AdressNumber"
+            name="AddressNumber"
             type="number"
             onChange={(e) =>
               handleForm({
