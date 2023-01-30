@@ -32,7 +32,19 @@ export default function CartItems(props) {
                         </div>
                         <div>
                             <p className="quantity">{`Quantity ${i.quantity}`}</p>
-                            <p className="remove">Remove</p>
+                            <p className="remove" onClick={() => {
+                                const URL = `${process.env.REACT_APP_API_URL}/remove-item`;
+                                const body = {
+                                    "product": {
+                                        "name": i.name,
+                                        "price": i.price,
+                                        "description": i.description,
+                                        "image": i.image
+                                    }
+                                }
+                                const promise = axios.post(URL,body,config);
+                                promise.catch((err) => console.log(err.data));
+                            }}>Remove</p>
                         </div>
                     </ProductDetails>
                 </CartItem>
@@ -44,6 +56,7 @@ export default function CartItems(props) {
 
 const CartItemsDiv = styled.div`
   background-color: blue;
+  overflow: auto;
   width:100%;
   height:70%;
 `;
@@ -71,11 +84,13 @@ const ProductDetails = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom:10px;
         h1{
             font-size: 20px;
         }
         .remove{
             font-weight:700;
+            cursor:pointer;
         }
         .price{
             font-weight: 400;
