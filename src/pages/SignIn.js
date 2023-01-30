@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import React, { useContext } from "react";
-import { AuthContext } from "../providers/AuthContext";
+import React from "react";
+
 
 export default function Login() {
   const navigate = useNavigate();
-  const { formLogin, setFormLogin } = useContext(AuthContext);
+  const [formLogin, setFormLogin] = React.useState({
+    name: "",
+    password: ""
+  });
 
   const handleForm = (e) => {
     setFormLogin({
@@ -15,20 +18,22 @@ export default function Login() {
     });
   };
 
-  const fazerLogin = (e) => {
+  const doLogin = (e) => {
     e.preventDefault();
 
-    const requisicao = axios.post(
-      `${process.env.REACT_APP_API_URL}/sign-in`,
-      formLogin
-    );
-
-    requisicao.then((req) => {
-      console.log(req.data);
-      setFormLogin(req.data);
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, {
+      email: formLogin.email,
+      password: formLogin.password
+      
+    });
+    console.log("enviei",formLogin.email,formLogin.password);
+    promise.then((res) => {
+      console.log(res.data);
+      alert("login efetuado com sucesso")
+      //setFormLogin(res.data);
     });
 
-    requisicao.catch((err) => {
+    promise.catch((err) => {
       alert(err.response.data.message);
     });
   };
@@ -41,7 +46,7 @@ export default function Login() {
           <p>Voltar a Loja</p>
         </Link>
         <Form>
-          <form onSubmit={fazerLogin}>
+          <form onSubmit={doLogin}>
             <input
               type="email"
               name="email"
