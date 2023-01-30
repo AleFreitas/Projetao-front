@@ -53,7 +53,7 @@ export default function Rota() {
       <Container>
         <Link to={`/sign-in`} style={linkStyle}>
           <img src={user} alt={user} /> </Link>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Cartimg
           src={bag}
           alt={bag}
@@ -173,12 +173,14 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 46px;
   line-height: 50px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
+  
 `;
 const CheckoutRedirect = styled.div`
   display: flex;
@@ -223,8 +225,8 @@ const Products = styled.div`
   margin-top: 50px;
   margin-bottom: 50px;
   width: 95%;
-  height: 600px;
-  background: #ffffff;
+  gap:10px;
+  padding:15px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
