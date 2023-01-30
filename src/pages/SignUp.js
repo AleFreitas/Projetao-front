@@ -2,60 +2,62 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../providers/AuthContext";
 
 export default function Cadastro() {
-  const [form, setForm] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
   const navigate = useNavigate();
+  const { formCadastro, setFormCadastro } = useContext(AuthContext);
 
-  function handleForm(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
- 
-  function doRegister(e) {
-    e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      return alert("senhas diferentes");
-    }
-    
-    const promise = axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, {
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      confirmPassword: form.confirmPassword 
+  const handleCadastro = (e) => {
+    setFormCadastro({
+      ...formCadastro,
+      [e.target.name]: e.target.value,
     });
-    promise.then((res) => console.log(res.data));
-    promise.catch((err) => alert(err.response.data.message));
-  }
-  
+  };
+
+  const fazerCadastro = (e) => {
+    e.preventDefault();
+
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/sign-up`,
+      formCadastro
+    );
+    requisicao.then((req) => {
+      console.log(req.data);
+      setFormCadastro(req.data);
+      alert("Cadastro realizado com sucesso!");
+      navigate("/");
+    });
+
+    requisicao.catch((err) => {
+      alert(err.response.data.message);
+    });
+  };
+
   return (
     <>
       <Container>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Link to={`/`} style={linkStyle}>
           <p>Voltar a Loja</p>
         </Link>
         <Form>
-          <form onSubmit={doRegister}>
+          <form onSubmit={fazerCadastro}>
             <input
-              type="text"
+              type="name"
               name="name"
-              required
               placeholder="Nome"
-              onChange={handleForm}
-              value={form.name}
+              onChange={handleCadastro}
+              value={formCadastro.name}
+              required
             />
             <input
               type="email"
               name="email"
               placeholder="E-mail"
-              onChange={handleForm}
-              value={form.email}
+              onChange={handleCadastro}
+              value={formCadastro.email}
               required
             />
 
@@ -63,16 +65,16 @@ export default function Cadastro() {
               type="password"
               name="password"
               placeholder="Senha"
-              onChange={handleForm}
-              value={form.password}
+              onChange={handleCadastro}
+              value={formCadastro.password}
               required
             />
             <input
               type="password"
               name="confirmPassword"
               placeholder="Confirme a senha"
-              onChange={handleForm}
-              value={form.confirmPassword}
+              onChange={handleCadastro}
+              value={formCadastro.confirmPassword}
               required
             />
 
@@ -99,15 +101,17 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 64px;
   line-height: 50px;
+  margin-bottom:30px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
 `;
 const Container = styled.div`
-  height: 1300px;
+  height:100vh;
   width: 100%;
   display: flex;
   flex-direction: column;

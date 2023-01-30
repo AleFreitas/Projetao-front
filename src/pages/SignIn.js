@@ -1,15 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import React from "react";
-
+import React, { useContext } from "react";
+import { AuthContext } from "../providers/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [formLogin, setFormLogin] = React.useState({
-    name: "",
-    password: ""
-  });
+  const { formLogin, setFormLogin } = useContext(AuthContext);
 
   const handleForm = (e) => {
     setFormLogin({
@@ -18,22 +15,20 @@ export default function Login() {
     });
   };
 
-  const doLogin = (e) => {
+  const fazerLogin = (e) => {
     e.preventDefault();
 
-    const promise = axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, {
-      email: formLogin.email,
-      password: formLogin.password
-      
-    });
-    console.log("enviei",formLogin.email,formLogin.password);
-    promise.then((res) => {
-      console.log(res.data);
-      alert("login efetuado com sucesso")
-      //setFormLogin(res.data);
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/sign-in`,
+      formLogin
+    );
+
+    requisicao.then((req) => {
+      console.log(req.data);
+      setFormLogin(req.data);
     });
 
-    promise.catch((err) => {
+    requisicao.catch((err) => {
       alert(err.response.data.message);
     });
   };
@@ -41,12 +36,12 @@ export default function Login() {
   return (
     <>
       <Container>
-        <Text> Nome da Loja </Text>
+        <Text> Serenity </Text>
         <Link to={`/`} style={linkStyle}>
           <p>Voltar a Loja</p>
         </Link>
         <Form>
-          <form onSubmit={doLogin}>
+          <form onSubmit={fazerLogin}>
             <input
               type="email"
               name="email"
@@ -88,22 +83,24 @@ const Text = styled.div`
   justify-content: center;
   width: 326px;
   height: 50px;
-  font-family: "Saira Stencil One";
+  font-family: "Pacifico";
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 64px;
+  margin-bottom:50px;
   line-height: 50px;
   color: #ffffff;
+  text-shadow: 2px 2px #0a334e;
 `;
 const Container = styled.div`
-  height: 1300px;
   width: 100%;
+  height:100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  background: #80b4a9;
+  background-color: #80b4a9;
 `;
 const Form = styled.div`
   input {

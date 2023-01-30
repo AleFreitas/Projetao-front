@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import React from "react";
 import { AuthContext } from "../providers/AuthContext.js";
 
 export default function CheckOut() {
@@ -11,6 +10,7 @@ export default function CheckOut() {
   const [balance, setBalance] = useState(0);
   const nav = useNavigate();
   const { token } = useContext(AuthContext);
+  console.log(token);
 
   useEffect(() => {
     if (!token) {
@@ -19,6 +19,7 @@ export default function CheckOut() {
     const authorization = {
       headers: { Authorization: `Bearer ${token}` },
     };
+    console.log(authorization)
     axios
       .get(`${process.env.REACT_APP_API_URL}/cart-items`, authorization)
       .then((res) => {
@@ -40,10 +41,11 @@ export default function CheckOut() {
   function saveOrder(e) {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_API_URL}/checkout`, {
+      .post(`${process.env.REACT_APP_API_URL}/checkout`, form,  {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        alert("compra concluida")
         nav("/");
       });
   }
@@ -265,8 +267,6 @@ const Form = styled.div`
 const ConfirmOrder = styled.button`
   margin-top: 20px;
   background-color: #e49882;
-  /* box-shadow: 2px 2px ; */
-
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
@@ -303,8 +303,6 @@ const CartProducts = styled.div`
   display: flex;
   flex-direction: column;
   h1 {
-    display: flex;
-    justify-content: center;
     margin-bottom: 20px;
     font-family: "Raleway";
     font-style: normal;
